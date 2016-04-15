@@ -21,7 +21,7 @@ class Tax {
 		return $this->value;
 	}
 
-	public function calculate($nfvalue) {}
+	public function calculate($invoiceValue) {}
 }
 
 class Pis extends Tax {
@@ -36,15 +36,57 @@ class Pis extends Tax {
 		return $this->minimum;
 	}
 
-	public function calculate($nfValue) {
+	public function calculate($invoiceValue) {
 
-		if ($nfValue >= $this->minimum) {
-			return getTaxValue($nfValue, $this->value);
+		if ($invoiceValue >= $this->minimum) {
+			return getTaxValue($invoiceValue, $this->value);
 		} else {
-			return $nfValue;
+			return $invoiceValue;
 		}
 	}
 
 }
+
+class Cofins extends Tax {
+	private $name = 'cofins';
+	private $minimum = '5000';
+
+	public function setMinimum($minimum) {
+		$this->minimum = $minimum;
+	}
+
+	public function getMinimum() {
+		return $this->minimum;
+	}
+
+	public function calculate($invoiceValue) {
+
+		if ($invoiceValue >= $this->minimum) {
+			return getTaxValue($invoiceValue, $this->value);
+		} else {
+			return $invoiceValue;
+		}
+	}
+
+}
+
+class Csll extends Tax {
+	private $name = 'cssl';
+	private $minimum = '5000';
+
+	public function setMinimum($minimum) {
+		$this->minimum = $minimum;
+	}
+
+	public function getMinimum() {
+		return $this->minimum;
+	}
+
+	public function calculate($invoiceValue) {
+		return getTaxValue($invoiceValue, $this->value);
+	}
+
+}
+
 
 ?>
