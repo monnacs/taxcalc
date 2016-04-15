@@ -9,27 +9,26 @@
 
 <body>
 
-<div id="form" >
+<a href="setup.php">Área restrita (atualizar valores)</a>
 
-	<h4>Nota fiscal</h4>
+	<div id="form" >
 
-<form action="index.php">
+		<h4>Nota fiscal</h4>
 
+		<form action="index.php">
 
-Valor da nota: <input type="text" name="value"><br />
+			Valor da nota: <input type="text" name="value"><br /><br />
 
-<br />
+			Modalidade: <br />
+				<input type="radio" name="cumulative" value="1" checked>Cumulativo<br>
+				<input type="radio" name="cumulative" value="0">Não cumulativo<br>
+	
+			<br />
+ 	
+				<input type="submit" value="Calcular">
 
-Modalidade: <br />
-<input type="radio" name="cumulative" value="1" checked>Cumulativo<br>
-<input type="radio" name="cumulative" value="0">Não cumulativo<br>
-
-<br />
- 
-<input type="submit" value="Calcular">
-
-</form>
-</div>
+		</form>
+	</div>
 
 </body>
 

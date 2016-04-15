@@ -3,11 +3,11 @@
 /* função genérica Taxa */
 class Tax {
 	private $name = '';
-	protected  $value = '';
+	protected $value = 0;
 
 	public function setName($name) {
 		$this->name = $name;
-	}
+	}	
 
 	public function getName() {
 		return $this->name;
@@ -19,6 +19,14 @@ class Tax {
 
 	public function getValue() {
 		return $this->value;
+	}
+
+	public function getTaxValue ($invoiceValue, $tax) {
+		echo "invoice ".$invoiceValue."<br>";
+		echo "value ".$tax."<br>";
+		$taxValue = ( $invoiceValue * (number_format($tax, 2)) / 100 );
+		echo "cal-culo".$taxValue."<br>";
+		return $taxValue;
 	}
 
 	public function calculate($invoiceValue) {}
@@ -36,10 +44,17 @@ class Pis extends Tax {
 		return $this->minimum;
 	}
 
-	public function calculate($invoiceValue) {
+	public function setValueNonCumulative($valueNonCumulative) {
+		$this->valueNonCumulative = $valueNonCumulative;
+	}
 
+	public function getValueNonCumulative() {
+		return $this->valueNonCumulative;
+	}
+
+	public function calculate($invoiceValue) {
 		if ($invoiceValue >= $this->minimum) {
-			return getTaxValue($invoiceValue, $this->value);
+			return $this->getTaxValue($invoiceValue, $this->value);
 		} else {
 			return 0;
 		}
@@ -57,6 +72,14 @@ class Cofins extends Tax {
 
 	public function getMinimum() {
 		return $this->minimum;
+	}
+
+	public function setValueNonCumulative($valueNonCumulative) {
+		$this->valueNonCumulative = $valueNonCumulative;
+	}
+
+	public function getValueNonCumulative() {
+		return $this->valueNonCumulative;
 	}
 
 	public function calculate($invoiceValue) {
@@ -113,6 +136,5 @@ class Irpj extends Tax {
 
 
 }
-
 
 ?>

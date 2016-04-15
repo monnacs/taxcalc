@@ -1,44 +1,50 @@
 <?php
-include 'class.php';
-include 'function.php';
+include_once 'function.php';
+require ('class.php'); 
 
-/* Generates new object for each tax */
-$pis = new Pis();
-$cofins = new Cofins();
-$csll = new Csll();
-$irpj = new Irpj();
+session_start();
 
-/* Standard initial values */
-if(($_GET['cumulative'] == 1)) {
-	$pis->setValue(0.65);
-	$cofins->setValue(3);
-} else {
-	$pis->setValue(1.65);
-	$cofins->setValue(7.6);
+/* Generates new object for each tax if necessary*/
+
+if(!isset($pis)) {
+	$pis = new Pis();
+	$_SESSION['pis'] = $pis;
 }
 
-$csll->setValue(1.08);
-$irpj->setValue(1.5);
+if(!isset($cofins)) {
+	$cofins = new Cofins();
+	$_SESSION['cofins'] = $cofins;
+}
+
+if(!isset($csll)) {
+	$csll = new Csll();
+	$_SESSION['csll'] = $csll;
+}
+
+if(!isset($irpj)) {
+	$irpj = new Irpj();
+	$_SESSION['irpj'] = $irpj;
+}
 
 if(isset($_GET['value'])) {
 	
 	/* calculates each tax */
 	$invoiceValue = $_GET['value'];
 	$pisAdd = $pis->calculate($invoiceValue);
-	$cofinsAdd = $cofins->calculate($invoiceValue);
-	$csllAdd = $csll->calculate($invoiceValue);	
-	$irpjAdd = $irpj->calculate($invoiceValue);	
+	//$cofinsAdd = $cofins->calculate($invoiceValue);
+	//$csllAdd = $csll->calculate($invoiceValue);	
+	//$irpjAdd = $irpj->calculate($invoiceValue);	
 
 	/* debug stuff */
 	echo "Valor da nota fiscal = ".$invoiceValue."<br />";
 	echo "Adicional PIS = ".$pisAdd."<br />";
-	echo "Adicional COFINS = ".$cofinsAdd."<br />";
-	echo "Adicional CSLL = ".$csllAdd."<br />";
-	echo "Adicional IRPJ = ".$irpjAdd."<br />";
+	//echo "Adicional COFINS = ".$cofinsAdd."<br />";
+	//echo "Adicional CSLL = ".$csllAdd."<br />";
+	//echo "Adicional IRPJ = ".$irpjAdd."<br />";
 
 	$final = $invoiceValue + $pisAdd + $cofinsAdd + $csllAdd + $irpjAdd;
 
-	echo number_format($final, 2, ',', '.');
+	echo "<br /><br /> Valor total da nota fiscal: R$ ".number_format($final, 2, ',', '.');
 }
 
 ?>
