@@ -41,7 +41,7 @@ class Pis extends Tax {
 		if ($nfValue >= $this->minimum) {
 			return getTaxValue($nfValue, $this->value);
 		} else {
-			return $nfvalue;
+			return $nfValue;
 		}
 	}
 
