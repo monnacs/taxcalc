@@ -41,7 +41,7 @@ class Pis extends Tax {
 		if ($invoiceValue >= $this->minimum) {
 			return getTaxValue($invoiceValue, $this->value);
 		} else {
-			return $invoiceValue;
+			return 0;
 		}
 	}
 
@@ -64,14 +64,14 @@ class Cofins extends Tax {
 		if ($invoiceValue >= $this->minimum) {
 			return getTaxValue($invoiceValue, $this->value);
 		} else {
-			return $invoiceValue;
+			return 0;
 		}
 	}
 
 }
 
 class Csll extends Tax {
-	private $name = 'cssl';
+	private $name = 'csll';
 	private $minimum = '5000';
 
 	public function setMinimum($minimum) {
@@ -85,6 +85,32 @@ class Csll extends Tax {
 	public function calculate($invoiceValue) {
 		return getTaxValue($invoiceValue, $this->value);
 	}
+
+}
+
+class Irpj extends Tax {
+	private $name = 'irpj';
+	private $minimum = '10';
+
+	public function setMinimum($minimum) {
+		$this->minimum = $minimum;
+	}
+
+	public function getMinimum() {
+		return $this->minimum;
+	}
+
+	public function calculate($invoiceValue) {
+		$irAmount = getTaxValue($invoiceValue, $this->value);
+
+		if($irAmount > 10) {
+			return $irAmount;
+		} else {
+			return 0;
+		}
+
+	}
+
 
 }
 
