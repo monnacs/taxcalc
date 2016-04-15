@@ -1,18 +1,20 @@
 <?php
-// include 'class.php';
+include 'class.php';
 include 'function.php';
 
-$pis = ($_GET['cumulative'] == 1 ? 0.65 :  1.65) ;
-$cofins = ($_GET['cumulative'] == 1 ? 3 : 7.6) ;
+$pis = new Pis();
 
-if(isset($_GET['value'])) { ?>
-
-<div id="resultado" >
-
-<?php 
-echo taxcalc($_GET['value'], $pis, $cofins); 
-
+if(($_GET['cumulative'] == 1)) {
+	$pis->setValue(0.65);
+} else {
+	$pis->setValue(1.65);
 }
-?>
 
-</div>
+if(isset($_GET['value'])) {
+	
+	$valor = $_GET['value'];
+	$calculado = $pis->calculate($valor);
+	echo number_format($calculado, 2, ',', '.');
+}
+
+?>

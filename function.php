@@ -1,8 +1,8 @@
 <?php 
 
-function taxcalc ($value, $pis, $cofins) {
-
-	return $value * $pis * $cofins;
+/* Valor da nota + taxa (em %) */
+function getTaxValue ($nfValue, $tax) {
+	return $nfValue + ( $nfValue * (number_format($tax, 2)) / 100 );
 }
 
 ?>
