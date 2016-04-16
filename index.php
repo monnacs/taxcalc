@@ -1,4 +1,4 @@
-<?php include 'taxcalc.php'; ?>
+<?php include_once 'taxcalc.php'; ?>
 
 <html>
 <head>

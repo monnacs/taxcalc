@@ -23,7 +23,7 @@ $irpj = $_SESSION['irpj'];
 
 	<div id="form" >
 
-		<h4>Alíquotas</h4>
+		<h4>Alterar alíquotas</h4>
 
 		<form action="update.php" method="POST">
 

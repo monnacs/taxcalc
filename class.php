@@ -1,9 +1,9 @@
 <?php
 
-/* função genérica Taxa */
+/* Generic class Tax */
 class Tax {
-	private $name = '';
-	protected $value = 0;
+	public $name = '';
+	public $value = 0;
 
 	public function setName($name) {
 		$this->name = $name;
@@ -21,11 +21,8 @@ class Tax {
 		return $this->value;
 	}
 
-	public function getTaxValue ($invoiceValue, $tax) {
-		echo "invoice ".$invoiceValue."<br>";
-		echo "value ".$tax."<br>";
-		$taxValue = ( $invoiceValue * (number_format($tax, 2)) / 100 );
-		echo "cal-culo".$taxValue."<br>";
+	public function getTaxValue ($invoiceValue) {
+		$taxValue = ( $invoiceValue * (number_format($this->value, 2)) / 100 );
 		return $taxValue;
 	}
 
@@ -33,8 +30,8 @@ class Tax {
 }
 
 class Pis extends Tax {
-	private $name = 'pis';
-	private $minimum = '5000';
+	public $name = 'pis';
+	public $minimum = '5000';
 
 	public function setMinimum($minimum) {
 		$this->minimum = $minimum;
@@ -54,7 +51,7 @@ class Pis extends Tax {
 
 	public function calculate($invoiceValue) {
 		if ($invoiceValue >= $this->minimum) {
-			return $this->getTaxValue($invoiceValue, $this->value);
+			return $this->getTaxValue($invoiceValue);
 		} else {
 			return 0;
 		}
@@ -63,8 +60,8 @@ class Pis extends Tax {
 }
 
 class Cofins extends Tax {
-	private $name = 'cofins';
-	private $minimum = '5000';
+	public $name = 'cofins';
+	public $minimum = '5000';
 
 	public function setMinimum($minimum) {
 		$this->minimum = $minimum;
@@ -85,7 +82,7 @@ class Cofins extends Tax {
 	public function calculate($invoiceValue) {
 
 		if ($invoiceValue >= $this->minimum) {
-			return getTaxValue($invoiceValue, $this->value);
+			return $this->getTaxValue($invoiceValue);
 		} else {
 			return 0;
 		}
@@ -94,8 +91,8 @@ class Cofins extends Tax {
 }
 
 class Csll extends Tax {
-	private $name = 'csll';
-	private $minimum = '5000';
+	public $name = 'csll';
+	public $minimum = '5000';
 
 	public function setMinimum($minimum) {
 		$this->minimum = $minimum;
@@ -106,14 +103,14 @@ class Csll extends Tax {
 	}
 
 	public function calculate($invoiceValue) {
-		return getTaxValue($invoiceValue, $this->value);
+		return $this->getTaxValue($invoiceValue);
 	}
 
 }
 
 class Irpj extends Tax {
-	private $name = 'irpj';
-	private $minimum = '10';
+	public $name = 'irpj';
+	public $minimum = '10';
 
 	public function setMinimum($minimum) {
 		$this->minimum = $minimum;
@@ -124,7 +121,7 @@ class Irpj extends Tax {
 	}
 
 	public function calculate($invoiceValue) {
-		$irAmount = getTaxValue($invoiceValue, $this->value);
+		$irAmount = $this->getTaxValue($invoiceValue);
 
 		if($irAmount > 10) {
 			return $irAmount;
@@ -133,7 +130,6 @@ class Irpj extends Tax {
 		}
 
 	}
-
 
 }
 

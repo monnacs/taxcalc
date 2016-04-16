@@ -1,10 +1,12 @@
 <?php
-include_once 'function.php';
-require ('class.php'); 
+include_once 'class.php';
 
 session_start();
 
-/* Generates new object for each tax if necessary*/
+$pis = $_SESSION['pis'];
+$cofins = $_SESSION['cofins'];
+$csll = $_SESSION['csll'];
+$irpj = $_SESSION['irpj'];
 
 if(!isset($pis)) {
 	$pis = new Pis();
@@ -29,18 +31,19 @@ if(!isset($irpj)) {
 if(isset($_GET['value'])) {
 	
 	/* calculates each tax */
+
 	$invoiceValue = $_GET['value'];
 	$pisAdd = $pis->calculate($invoiceValue);
-	//$cofinsAdd = $cofins->calculate($invoiceValue);
-	//$csllAdd = $csll->calculate($invoiceValue);	
-	//$irpjAdd = $irpj->calculate($invoiceValue);	
+	$cofinsAdd = $cofins->calculate($invoiceValue);
+	$csllAdd = $csll->calculate($invoiceValue);	
+	$irpjAdd = $irpj->calculate($invoiceValue);	
 
 	/* debug stuff */
 	echo "Valor da nota fiscal = ".$invoiceValue."<br />";
 	echo "Adicional PIS = ".$pisAdd."<br />";
-	//echo "Adicional COFINS = ".$cofinsAdd."<br />";
-	//echo "Adicional CSLL = ".$csllAdd."<br />";
-	//echo "Adicional IRPJ = ".$irpjAdd."<br />";
+	echo "Adicional COFINS = ".$cofinsAdd."<br />";
+	echo "Adicional CSLL = ".$csllAdd."<br />";
+	echo "Adicional IRPJ = ".$irpjAdd."<br />";
 
 	$final = $invoiceValue + $pisAdd + $cofinsAdd + $csllAdd + $irpjAdd;
 
